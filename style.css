@@ -48,12 +48,6 @@ body {
     transition: var(--transition);
 }
 
-@media (max-width: 768px) {
-    .nav-logo {
-        height: 30px;
-    }
-}
-
 .logo {
     color: var(--light-color);
     font-size: 1.5rem;
@@ -370,6 +364,18 @@ body {
     color: var(--secondary-color);
 }
 
+.footer .logo {
+    display: block;
+    text-align: center;
+    margin: 0 auto 2rem auto;
+}
+
+.footer .nav-logo {
+    height: 60px;
+    width: auto;
+    transition: var(--transition);
+}
+
 .social-icons {
     display: flex;
     justify-content: center;
@@ -430,5 +436,25 @@ body {
     
     .section-title h2 {
         font-size: 2rem;
+    }
+}
+
+/* Responsive para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .footer .nav-logo {
+        height: 45px;
+    }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .footer .nav-logo {
+        height: 35px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-logo {
+        height: 30px;
     }
 }
