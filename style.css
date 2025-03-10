@@ -329,6 +329,17 @@ body {
     font-size: 1.8rem;
 }
 
+.map-responsive iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    border: 3px solid var(--secondary-color) !important; /* Borde con el color secundario */
+    border-radius: 8px; /* Esquinas redondeadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+}
+
 /* Footer */
 .footer {
     background-color: rgba(60, 60, 60, 0.95);
