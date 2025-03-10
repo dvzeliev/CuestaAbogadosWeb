@@ -42,6 +42,18 @@ body {
     padding: 0 2rem;
 }
 
+.nav-logo {
+    height: 40px;
+    width: auto;
+    transition: var(--transition);
+}
+
+@media (max-width: 768px) {
+    .nav-logo {
+        height: 30px;
+    }
+}
+
 .logo {
     color: var(--light-color);
     font-size: 1.5rem;
