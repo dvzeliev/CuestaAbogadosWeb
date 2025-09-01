@@ -245,19 +245,19 @@ body {
     color: var(--primary-color);
 }
 
-/* ===== Flip Cards (Servicios) — PARCHE ROBUSTO ===== */
+/* ==== Flip Cards (Servicios) — método por-caras, estable ==== */
 :root{
   --card-height: 360px;
   --card-radius: 12px;
 }
 
-/* El item del grid actúa como contenedor 3D */
+/* El item del grid actúa como contenedor con perspectiva */
 .service-card.flip{
   position: relative;
   height: var(--card-height);
   perspective: 1000px;
-  padding: 0 !important;                  /* que las caras ocupen todo el alto */
-  border-bottom: none !important;         /* anulamos borde animado previo */
+  padding: 0 !important;                 /* caras ocupan todo el alto */
+  border-bottom: none !important;        /* anulamos animación base */
   background: transparent;
 }
 
@@ -267,27 +267,17 @@ body {
   border-bottom: none !important;
 }
 
-/* Elemento que rota */
 .service-card.flip .card-inner{
   position: relative;
   width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
-  transition: transform .6s cubic-bezier(.2,.65,.3,1);
   border-radius: var(--card-radius);
-  overflow: hidden;                        /* respeta el radio */
+  overflow: hidden;                       /* respeta el radio */
   box-shadow: var(--shadow);
   background: #fff;
-  will-change: transform;
 }
 
-/* Giro: hover y teclado */
-.service-card.flip:hover .card-inner,
-.service-card.flip:focus-within .card-inner{
-  transform: rotateY(180deg);
-}
-
-/* Caras */
+/* Caras apiladas una sobre otra */
 .card-face{
   position: absolute;
   inset: 0;
@@ -298,21 +288,40 @@ body {
   padding: 1.25rem 1.25rem 1.5rem;
   background: #fff;
   backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;    /* Safari */
+  -webkit-backface-visibility: hidden;   /* Safari */
   transform-style: preserve-3d;
-  transform: translateZ(0);                /* evita artefactos */
+  will-change: transform;
 }
 
-/* ¡Explícitos! Muy importante */
-.card-front{ transform: rotateY(0deg) translateZ(0.01px); z-index: 2; }
-.card-back { transform: rotateY(180deg) translateZ(0.02px); z-index: 1; }
-
-/* Empuja un pelín los hijos de la cara trasera para evitar “borrados” */
-.card-back *{
-  transform: translateZ(0.03px);
+/* Estado inicial: frontal visible, trasera oculta (girada) */
+.card-front{ 
+  transform: rotateY(0deg) translateZ(0.01px);
+  z-index: 2;
+}
+.card-back{  
+  transform: rotateY(-180deg) translateZ(0.01px); /* -180 evita espejos */
+  text-align: left;
+  color: var(--dark-color);
+  overflow: auto;                         /* por si hay mucha lista */
 }
 
-/* Frente (aprovecha tu estilo) */
+/* Giro en hover y con teclado (focus) */
+.service-card.flip:hover .card-front,
+.service-card.flip:focus-within .card-front{
+  transform: rotateY(180deg);
+}
+.service-card.flip:hover .card-back,
+.service-card.flip:focus-within .card-back{
+  transform: rotateY(0deg);
+}
+
+/* Transiciones en cada cara (no en el contenedor) */
+.card-front,
+.card-back{
+  transition: transform .6s cubic-bezier(.2,.65,.3,1);
+}
+
+/* Frente (aprovecha tus estilos) */
 .card-front .service-icon{
   font-size: 3rem;
   color: var(--secondary-color);
@@ -323,19 +332,12 @@ body {
   color: var(--primary-color);
 }
 
-/* Dorso */
-.card-back{
-  text-align: left;
-  overflow: auto;                          /* por si la lista es larga */
-  color: var(--dark-color);
-}
+/* Dorso: títulos y lista claros */
 .card-back-title{
   font-size: 1.05rem;
   margin-bottom: .75rem;
   color: var(--primary-color);
 }
-
-/* Lista visible y clara */
 .card-list{
   margin: 0;
   padding-left: 1.1rem;
@@ -349,12 +351,12 @@ body {
 .card-back::-webkit-scrollbar{ width: 8px; }
 .card-back::-webkit-scrollbar-thumb{ background: #ddd; border-radius: 8px; }
 
-/* Compacta en móvil si quieres */
+/* Responsive: más compactas en móvil si quieres */
 @media (max-width: 768px){
   :root{ --card-height: 320px; }
 }
 
-/* Por si algún estilo global mete transform en el grid, neutralízalo */
+/* Salvaguarda por si algún ancestro tiene transform que rompa el 3D */
 .services-grid{ transform: translateZ(0); }
 
 /* Abogados */
