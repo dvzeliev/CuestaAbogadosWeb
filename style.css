@@ -359,6 +359,39 @@ body {
 /* Salvaguarda por si algún ancestro tiene transform que rompa el 3D */
 .services-grid{ transform: translateZ(0); }
 
+/* Solo móvil */
+@media (max-width: 768px){
+  /* Mantén una altura de tarjeta razonable en móvil */
+  :root{ --card-height: 320px; }
+
+  /* Solo la tarjeta CIVIL: permitir scroll en la cara trasera */
+  .service-card.flip--civil .card-back{
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* inercia iOS */
+    padding-right: 0.75rem;            /* deja espacio al scrollbar */
+    position: relative;
+  }
+
+  /* Scrollbar sutil (solo WebKit, iOS/Android/Chrome) */
+  .service-card.flip--civil .card-back::-webkit-scrollbar{
+    width: 6px;
+  }
+  .service-card.flip--civil .card-back::-webkit-scrollbar-thumb{
+    background: rgba(0,0,0,.2);
+    border-radius: 6px;
+  }
+
+  /* Pequeña pista de “hay más contenido” con degradado al fondo */
+  .service-card.flip--civil .card-back::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height: 28px;
+    pointer-events:none;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.95));
+  }
+}
+
 /* Abogados */
 .team-section {
     background-color: #f9f9f9;
