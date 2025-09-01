@@ -245,41 +245,43 @@ body {
     color: var(--primary-color);
 }
 
-/* ===== Flip Cards (Servicios) – FIX CROSS-BROWSER ===== */
+/* ===== Flip Cards (Servicios) — PARCHE ROBUSTO ===== */
 :root{
   --card-height: 360px;
   --card-radius: 12px;
 }
 
+/* El item del grid actúa como contenedor 3D */
 .service-card.flip{
   position: relative;
   height: var(--card-height);
-  perspective: 1000px;                 /* contenedor con perspectiva */
-  padding: 0;                           /* la cara ocupa todo el alto */
-  border-bottom: none;                  /* sin borde animado */
+  perspective: 1000px;
+  padding: 0 !important;                  /* que las caras ocupen todo el alto */
+  border-bottom: none !important;         /* anulamos borde animado previo */
+  background: transparent;
 }
 
-/* anula el hover vertical de la card base para no interferir */
+/* Anula el hover antiguo que levantaba la tarjeta */
 .service-card.flip:hover{
-  transform: none;
-  border-bottom: none;
+  transform: none !important;
+  border-bottom: none !important;
 }
 
+/* Elemento que rota */
 .service-card.flip .card-inner{
   position: relative;
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  /* ¡IMPORTANTE!: no uses var(--transition) aquí */
   transition: transform .6s cubic-bezier(.2,.65,.3,1);
   border-radius: var(--card-radius);
-  overflow: hidden;                     /* respeta el radio */
+  overflow: hidden;                        /* respeta el radio */
   box-shadow: var(--shadow);
   background: #fff;
-  will-change: transform;               /* más fluidez */
+  will-change: transform;
 }
 
-/* Giro en hover y accesible con teclado */
+/* Giro: hover y teclado */
 .service-card.flip:hover .card-inner,
 .service-card.flip:focus-within .card-inner{
   transform: rotateY(180deg);
@@ -296,23 +298,35 @@ body {
   padding: 1.25rem 1.25rem 1.5rem;
   background: #fff;
   backface-visibility: hidden;
-  -webkit-backface-visibility: hidden; /* Safari */
+  -webkit-backface-visibility: hidden;    /* Safari */
   transform-style: preserve-3d;
-  transform: translateZ(0);            /* previene “parpadeos” */
+  transform: translateZ(0);                /* evita artefactos */
 }
 
-/* ¡Explícitos! Evita el texto al espejo */
-.card-front{ transform: rotateY(0deg) translateZ(0); z-index: 2; }
-.card-back { transform: rotateY(180deg) translateZ(1px); z-index: 1; }
+/* ¡Explícitos! Muy importante */
+.card-front{ transform: rotateY(0deg) translateZ(0.01px); z-index: 2; }
+.card-back { transform: rotateY(180deg) translateZ(0.02px); z-index: 1; }
 
-/* Cara frontal: reaprovecha tu estilo */
-.card-front .service-icon{ font-size: 3rem; color: var(--secondary-color); margin-bottom: .5rem; }
-.card-front .service-title{ font-size: 1.4rem; color: var(--primary-color); }
+/* Empuja un pelín los hijos de la cara trasera para evitar “borrados” */
+.card-back *{
+  transform: translateZ(0.03px);
+}
 
-/* Cara trasera */
+/* Frente (aprovecha tu estilo) */
+.card-front .service-icon{
+  font-size: 3rem;
+  color: var(--secondary-color);
+  margin-bottom: .5rem;
+}
+.card-front .service-title{
+  font-size: 1.4rem;
+  color: var(--primary-color);
+}
+
+/* Dorso */
 .card-back{
   text-align: left;
-  overflow: auto;                       /* por si la lista es larga */
+  overflow: auto;                          /* por si la lista es larga */
   color: var(--dark-color);
 }
 .card-back-title{
@@ -321,7 +335,7 @@ body {
   color: var(--primary-color);
 }
 
-/* Lista trasera: bullets bien visibles */
+/* Lista visible y clara */
 .card-list{
   margin: 0;
   padding-left: 1.1rem;
@@ -335,17 +349,14 @@ body {
 .card-back::-webkit-scrollbar{ width: 8px; }
 .card-back::-webkit-scrollbar-thumb{ background: #ddd; border-radius: 8px; }
 
-/* Respeta usuarios con motion reducido */
-@media (prefers-reduced-motion: reduce){
-  .service-card.flip .card-inner{ transition: none; }
-  .service-card.flip:hover .card-inner,
-  .service-card.flip:focus-within .card-inner{ transform: none; }
-}
-
-/* Ajuste en móvil si lo necesitas */
+/* Compacta en móvil si quieres */
 @media (max-width: 768px){
   :root{ --card-height: 320px; }
 }
+
+/* Por si algún estilo global mete transform en el grid, neutralízalo */
+.services-grid{ transform: translateZ(0); }
+
 /* Abogados */
 .team-section {
     background-color: #f9f9f9;
