@@ -357,7 +357,8 @@ body {
 }
 
 /* Salvaguarda por si algún ancestro tiene transform que rompa el 3D */
-.services-grid{ transform: translateZ(0); }
+.services-grid{ transform: translateZ(0); 
+}
 
 /* Solo móvil */
 @media (max-width: 768px){
