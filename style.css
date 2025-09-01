@@ -175,6 +175,15 @@ body {
     padding: 5rem 2rem;
 }
 
+.section-subtitle {
+  max-width: 800px;
+  margin: 0.5rem auto 2rem auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--secondary-color);
+  text-align: center;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
