@@ -245,7 +245,7 @@ body {
     color: var(--primary-color);
 }
 
-/* ==== Flip Cards (Servicios) – CORREGIDO ==== */
+/* ===== Flip Cards (Servicios) – FIX CROSS-BROWSER ===== */
 :root{
   --card-height: 360px;
   --card-radius: 12px;
@@ -254,12 +254,12 @@ body {
 .service-card.flip{
   position: relative;
   height: var(--card-height);
-  perspective: 1000px;                /* contenedor con perspectiva */
-  border-bottom: none;                 /* anulamos borde animado base */
-  padding: 0;                          /* la cara ocupa todo el área */
+  perspective: 1000px;                 /* contenedor con perspectiva */
+  padding: 0;                           /* la cara ocupa todo el alto */
+  border-bottom: none;                  /* sin borde animado */
 }
 
-/* anulamos el hover vertical de la card base */
+/* anula el hover vertical de la card base para no interferir */
 .service-card.flip:hover{
   transform: none;
   border-bottom: none;
@@ -270,20 +270,22 @@ body {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  /* OJO: aquí estaba el fallo. Nada de var(--transition) */
+  /* ¡IMPORTANTE!: no uses var(--transition) aquí */
   transition: transform .6s cubic-bezier(.2,.65,.3,1);
   border-radius: var(--card-radius);
-  overflow: hidden;                    /* respeta borde redondeado */
+  overflow: hidden;                     /* respeta el radio */
   box-shadow: var(--shadow);
   background: #fff;
+  will-change: transform;               /* más fluidez */
 }
 
-/* Giro en hover y con teclado (focus) */
+/* Giro en hover y accesible con teclado */
 .service-card.flip:hover .card-inner,
 .service-card.flip:focus-within .card-inner{
   transform: rotateY(180deg);
 }
 
+/* Caras */
 .card-face{
   position: absolute;
   inset: 0;
@@ -295,38 +297,37 @@ body {
   background: #fff;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden; /* Safari */
+  transform-style: preserve-3d;
+  transform: translateZ(0);            /* previene “parpadeos” */
 }
 
-/* EXPLÍCITOS (clave para evitar el “espejo”) */
-.card-front{ transform: rotateY(0deg); }
-.card-back { transform: rotateY(180deg); }
+/* ¡Explícitos! Evita el texto al espejo */
+.card-front{ transform: rotateY(0deg) translateZ(0); z-index: 2; }
+.card-back { transform: rotateY(180deg) translateZ(1px); z-index: 1; }
 
-/* Cara frontal: hereda tus estilos */
-.card-front .service-icon{
-  font-size: 3rem;
-  color: var(--secondary-color);
-  margin-bottom: .5rem;
-}
-.card-front .service-title{
-  font-size: 1.4rem;
-  color: var(--primary-color);
-}
+/* Cara frontal: reaprovecha tu estilo */
+.card-front .service-icon{ font-size: 3rem; color: var(--secondary-color); margin-bottom: .5rem; }
+.card-front .service-title{ font-size: 1.4rem; color: var(--primary-color); }
 
 /* Cara trasera */
 .card-back{
   text-align: left;
-  overflow: auto;                      /* por si hay mucha lista */
+  overflow: auto;                       /* por si la lista es larga */
+  color: var(--dark-color);
 }
 .card-back-title{
   font-size: 1.05rem;
   margin-bottom: .75rem;
   color: var(--primary-color);
 }
+
+/* Lista trasera: bullets bien visibles */
 .card-list{
-  list-style: disc inside;
+  margin: 0;
+  padding-left: 1.1rem;
+  list-style: disc;
   font-size: .98rem;
   line-height: 1.55;
-  color: var(--dark-color);
 }
 .card-list li + li{ margin-top: .35rem; }
 
@@ -334,13 +335,17 @@ body {
 .card-back::-webkit-scrollbar{ width: 8px; }
 .card-back::-webkit-scrollbar-thumb{ background: #ddd; border-radius: 8px; }
 
-/* Accesibilidad: reduce motion */
+/* Respeta usuarios con motion reducido */
 @media (prefers-reduced-motion: reduce){
   .service-card.flip .card-inner{ transition: none; }
   .service-card.flip:hover .card-inner,
   .service-card.flip:focus-within .card-inner{ transform: none; }
 }
 
+/* Ajuste en móvil si lo necesitas */
+@media (max-width: 768px){
+  :root{ --card-height: 320px; }
+}
 /* Abogados */
 .team-section {
     background-color: #f9f9f9;
