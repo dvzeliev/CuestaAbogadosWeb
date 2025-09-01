@@ -360,25 +360,33 @@ body {
 .services-grid{ transform: translateZ(0); 
 }
 
-/* Solo móvil */
+/* === Civil: fallback móvil con scroll interno y sin transform en la cara === */
 @media (max-width: 768px){
 
-  /* mantén altura razonable en móvil */
+  /* altura algo más contenida en móvil */
   :root{ --card-height: 320px; }
 
-  /* La cara trasera sigue girando, pero el SCROLL va en el hijo */
+  /* Para la tarjeta Civil en móvil: mostramos directamente la cara trasera */
+  .service-card.flip--civil .card-front{ display: none; }
   .service-card.flip--civil .card-back{
-    display: block;            /* quitamos el flex centrado */
-    padding: 0;                /* el padding lo ponemos dentro */
+    /* IMPORTANTÍSIMO: quitar la rotación en móvil */
+    transform: none !important;
+    backface-visibility: visible;   /* ya no rotamos, no hace falta ocultar dorso */
+    -webkit-backface-visibility: visible;
+    display: block;                 /* quitamos el flex centrado */
+    padding: 0;                     /* el padding irá en el contenedor scroll */
   }
 
+  /* El scroll va en un hijo que NO está transformado */
   .service-card.flip--civil .card-back-content{
-    height: 100%;              /* ocupa toda la cara */
+    position: relative;
+    height: 100%;
     max-height: 100%;
-    overflow-y: auto;          /* ¡aquí va el scroll! */
+    overflow-y: auto;               /* ¡aquí vive el scroll! */
     -webkit-overflow-scrolling: touch;  /* inercia iOS */
-    padding: 1rem 0.9rem 1.3rem 1rem;   /* margen interior */
-    touch-action: pan-y;                 /* asegura el gesto vertical */
+    overscroll-behavior: contain;       /* evita “arrastrar” el body */
+    touch-action: pan-y;                /* pista a navegadores compatibles */
+    padding: 1rem 0.9rem 1.3rem 1rem;
   }
 
   /* Scrollbar sutil (webkit) */
@@ -390,10 +398,8 @@ body {
   /* Pista visual de que hay más contenido */
   .service-card.flip--civil .card-back-content::after{
     content:"";
-    position:absolute;
-    left:0; right:0; bottom:0;
-    height: 26px;
-    pointer-events:none;
+    position:absolute; left:0; right:0; bottom:0;
+    height: 26px; pointer-events:none;
     background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.96));
   }
 }
