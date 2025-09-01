@@ -322,15 +322,30 @@ body {
     background-color: var(--secondary-color);
 }
 
-.info-item {
-    display: flex;
-    margin-bottom: 1rem;
+.contact-info p{ margin: 0; line-height: 1.6; }
+.link{ color: var(--light-color); text-decoration: underline; text-underline-offset: .15em; }
+.link:hover{ text-decoration: none; }
+.link.tel{ color: #ff6b6b; }     /* rojo legible sobre fondo oscuro */
+.link.wa{ color: #22c55e; }      /* verde WhatsApp */
+
+.info-item{
+  display: flex;                 
+  align-items: flex-start;      
+  gap: 12px;                     
+  margin-bottom: 1rem;
 }
 
-.info-icon {
-    margin-right: 1rem;
-    color: var(--secondary-color);
-    font-size: 1.2rem;
+.info-icon{
+  width: 24px;                   /* columna fija para todos los iconos */
+  min-width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;                /* evita “bailes” verticales */
+  margin-top: 2px;               /* microajuste para emoji */
+  color: var(--secondary-color);
+  font-size: 1.2rem;
 }
 
 /* Maps */
