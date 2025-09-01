@@ -348,6 +348,21 @@ body {
   font-size: 1.2rem;
 }
 
+/* Normaliza el icono PNG de WhatsApp en la sección Contacto */
+.wa-icon{
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* Por seguridad: cualquier img dentro del contenedor de icono no podrá “salirse” */
+.info-icon img{
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  width: auto;
+}
+
 /* Maps */
 .map-responsive{
     overflow:hidden;
