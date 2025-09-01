@@ -245,6 +245,92 @@ body {
     color: var(--primary-color);
 }
 
+/* ==== Flip Cards (Servicios) ==== */
+:root{
+  --card-height: 360px;         /* ajusta a 320–380px si prefieres */
+  --card-radius: 12px;
+}
+
+.service-card.flip{
+  position: relative;
+  height: var(--card-height);
+  perspective: 1000px;          /* profundidad 3D */
+  border-bottom: none;          /* evitamos la línea inferior animada */
+}
+
+/* anulamos el hover que subía la tarjeta en tu CSS base */
+.service-card.flip:hover{
+  transform: none;
+  border-bottom: none;
+}
+
+.service-card.flip .card-inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .6s var(--transition); /* usa tu var de transición */
+  border-radius: var(--card-radius);
+  overflow: hidden; /* redondeo visible */
+}
+
+/* Giro en hover y con teclado (focus) */
+.service-card.flip:hover .card-inner,
+.service-card.flip:focus-within .card-inner{
+  transform: rotateY(180deg);
+}
+
+.card-face{
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* Safari */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 1.25rem 1.5rem;
+  background: #fff;
+}
+
+/* Cara frontal: aprovechamos tu estilo existente */
+.card-front .service-icon{ font-size: 3rem; color: var(--secondary-color); margin-bottom: .5rem; }
+.card-front .service-title{ font-size: 1.4rem; color: var(--primary-color); }
+
+/* Cara trasera */
+.card-back{
+  transform: rotateY(180deg);
+  text-align: left;
+  background: #ffffff;
+  padding: 1.25rem 1.25rem 1.5rem;
+  overflow: auto;               /* por si la lista es larga */
+}
+
+.card-back-title{
+  font-size: 1.05rem;
+  margin-bottom: .75rem;
+  color: var(--primary-color);
+}
+
+.card-list{
+  list-style: disc inside;
+  font-size: .98rem;
+  line-height: 1.55;
+  color: var(--dark-color);
+}
+.card-list li + li{ margin-top: .35rem; }
+
+/* Scrollbar sutil (opcional) */
+.card-back::-webkit-scrollbar{ width: 8px; }
+.card-back::-webkit-scrollbar-thumb{ background: #ddd; border-radius: 8px; }
+
+/* Accesibilidad: respeta usuarios con reducción de movimiento */
+@media (prefers-reduced-motion: reduce){
+  .service-card.flip .card-inner{ transition: none; }
+  .service-card.flip:hover .card-inner,
+  .service-card.flip:focus-within .card-inner{ transform: none; }
+}
+
 /* Abogados */
 .team-section {
     background-color: #f9f9f9;
