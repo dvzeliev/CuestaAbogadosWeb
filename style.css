@@ -245,6 +245,19 @@ body {
     color: var(--primary-color);
 }
 
+.service-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--dark-color);
+}
+
+.service-card p br {
+  content: "";
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+
 /* Abogados */
 .team-section {
     background-color: #f9f9f9;
