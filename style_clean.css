@@ -770,21 +770,6 @@ body {
   }
 }
 
-/* Botón “Volver” (solo móvil por CSS; se inyecta por JS) */
-.flip-close{
-  position:absolute; top:8px; right:8px;
-  padding:.45rem .7rem; border-radius:999px; border:1px solid rgba(0,0,0,.15);
-  background:#fff; color: var(--dark-color); font-size:.85rem; line-height:1;
-  box-shadow: 0 2px 8px rgba(0,0,0,.08);
-  cursor:pointer; z-index:4; display:none;
-}
-.flip-close:hover{ background:#f8f8f8; }
-.flip-close:focus-visible{ outline:2px solid var(--secondary-color); outline-offset:2px; }
-
-@media (max-width: 768px){
-  .service-card.flip.is-flipped .flip-close{ display:block; }
-}
-
 /* Botón "Volver" minimalista, flotante en la esquina inferior derecha */
 .flip-close{
   position:absolute;
@@ -808,6 +793,7 @@ body {
 .flip-close:hover{ background:#ffffff; }
 .flip-close:focus-visible{ outline:2px solid var(--secondary-color); outline-offset:2px; }
 .flip-close svg{ width:18px; height:18px; display:block; }
+.flip-close i{ font-size:18px; line-height:1; display:block; }
 
 /* Solo móvil: mostrar el botón cuando la tarjeta esté volteada */
 @media (max-width: 768px){
