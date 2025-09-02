@@ -360,33 +360,30 @@ body {
 .services-grid{ transform: translateZ(0); 
 }
 
-/* === Civil: fallback móvil con scroll interno y sin transform en la cara === */
+/* === Flip por caras (ya lo tienes): añadimos soporte por clase === */
+.service-card.flip.is-flipped .card-front{ transform: rotateY(180deg); }
+.service-card.flip.is-flipped .card-back { transform: rotateY(0deg); }
+
+/* --- Ajustes específicos móvil para que el scroll funcione --- */
 @media (max-width: 768px){
+  :root{ --card-height: 320px; } /* algo más compacta en móvil */
 
-  /* altura algo más contenida en móvil */
-  :root{ --card-height: 320px; }
-
-  /* Para la tarjeta Civil en móvil: mostramos directamente la cara trasera */
-  .service-card.flip--civil .card-front{ display: none; }
+  /* La cara trasera sigue girando, pero el scroll lo hace un hijo sin transform */
   .service-card.flip--civil .card-back{
-    /* IMPORTANTÍSIMO: quitar la rotación en móvil */
-    transform: none !important;
-    backface-visibility: visible;   /* ya no rotamos, no hace falta ocultar dorso */
-    -webkit-backface-visibility: visible;
-    display: block;                 /* quitamos el flex centrado */
-    padding: 0;                     /* el padding irá en el contenedor scroll */
+    align-items: stretch;         /* que estire a toda la altura */
+    justify-content: flex-start;
+    padding: 0;                   /* padding dentro del contenedor */
   }
 
-  /* El scroll va en un hijo que NO está transformado */
   .service-card.flip--civil .card-back-content{
-    position: relative;
     height: 100%;
     max-height: 100%;
-    overflow-y: auto;               /* ¡aquí vive el scroll! */
-    -webkit-overflow-scrolling: touch;  /* inercia iOS */
-    overscroll-behavior: contain;       /* evita “arrastrar” el body */
-    touch-action: pan-y;                /* pista a navegadores compatibles */
-    padding: 1rem 0.9rem 1.3rem 1rem;
+    overflow-y: auto;             /* AQUÍ va el scroll */
+    -webkit-overflow-scrolling: touch; /* inercia iOS */
+    overscroll-behavior: contain;      /* no arrastra el body */
+    touch-action: pan-y;               /* pista a navegadores */
+    padding: 1rem .9rem 1.2rem 1rem;
+    position: relative;
   }
 
   /* Scrollbar sutil (webkit) */
@@ -395,7 +392,7 @@ body {
     background: rgba(0,0,0,.22); border-radius: 6px;
   }
 
-  /* Pista visual de que hay más contenido */
+  /* Degradado al pie como pista de que hay más contenido */
   .service-card.flip--civil .card-back-content::after{
     content:"";
     position:absolute; left:0; right:0; bottom:0;
