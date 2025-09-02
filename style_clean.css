@@ -841,7 +841,7 @@ body {
   height: var(--card-height);
   border-radius: var(--card-radius);
   box-shadow: var(--shadow);
-  background: var(--secondary-color);  /* fondo oscuro: usa tu color principal */
+  background: rgba(60, 60, 60, 0.95);  /* igual que la navbar/footer */
   display: flex;
   flex-direction: column;
   align-items: center;
