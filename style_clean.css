@@ -1,0 +1,842 @@
+/* Variables y Reseteo */
+:root {
+    --primary-color: #000000;
+    --secondary-color: #8a9597;
+    --light-color: #f5f5f5;
+    --dark-color: #333;
+    --transition: all 0.3s ease;
+    --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    line-height: 1.6;
+    color: var(--dark-color);
+    background-color: #fff;
+}
+
+/* Navegación */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.nav-logo {
+    height: 40px;
+    width: auto;
+    transition: var(--transition);
+}
+
+.logo {
+    color: var(--light-color);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.logo span {
+    color: var(--secondary-color);
+    margin-left: 5px;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+}
+
+.nav-item {
+    margin-left: 2rem;
+}
+
+.nav-link {
+    color: var(--light-color);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    color: var(--secondary-color);
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--light-color);
+    font-size: 1.5rem;
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    background: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--light-color);
+    padding: 0 2rem;
+    margin-top: 0;
+    position: relative;
+}
+
+.hero-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1, .hero h2 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.about-section {
+  background-color: var(--light-color);
+  padding: 5rem 2rem;
+}
+
+.about-content {
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--dark-color);
+}
+
+.about-content p {
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background-color: var(--secondary-color);
+    color: var(--light-color);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.btn:hover {
+    background-color: #0066ff;
+    transform: translateY(-3px);
+}
+
+/* Servicios */
+.section {
+    padding: 5rem 2rem;
+}
+
+.section-subtitle {
+  max-width: 800px;
+  margin: 0.5rem auto 2rem auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--secondary-color);
+  text-align: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--primary-color);
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+}
+
+.section-title h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 3px;
+    background-color: var(--secondary-color);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.service-card {
+    background-color: #fff;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border-bottom: 3px solid transparent;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    border-bottom: 3px solid var(--secondary-color);
+}
+
+.service-icon {
+    font-size: 3rem;
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+.service-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+/* ==== Flip Cards (Servicios) — método por-caras, estable ==== */
+:root{
+  --card-height: 360px;
+  --card-radius: 12px;
+}
+
+/* El item del grid actúa como contenedor con perspectiva */
+.service-card.flip{
+  position: relative;
+  height: var(--card-height);
+  perspective: 1000px;
+  padding: 0 !important;                 /* caras ocupan todo el alto */
+  border-bottom: none !important;        /* anulamos animación base */
+  background: transparent;
+}
+
+/* Anula el hover antiguo que levantaba la tarjeta */
+.service-card.flip:hover{
+  transform: none !important;
+  border-bottom: none !important;
+}
+
+.service-card.flip .card-inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--card-radius);
+  overflow: hidden;                       /* respeta el radio */
+  box-shadow: var(--shadow);
+  background: #fff;
+}
+
+/* Caras apiladas una sobre otra */
+.card-face{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 1.25rem 1.5rem;
+  background: #fff;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;   /* Safari */
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Estado inicial: frontal visible, trasera oculta (girada) */
+.card-front{ 
+  transform: rotateY(0deg) translateZ(0.01px);
+  z-index: 2;
+}
+.card-back{  
+  transform: rotateY(-180deg) translateZ(0.01px); /* -180 evita espejos */
+  text-align: left;
+  color: var(--dark-color);
+  overflow: hidden;                         /* por si hay mucha lista */
+}
+
+/* Giro en hover y con teclado (focus) */
+.service-card.flip:hover .card-front,
+.service-card.flip:focus-within .card-front{
+  transform: rotateY(180deg);
+}
+.service-card.flip:hover .card-back,
+.service-card.flip:focus-within .card-back{
+  transform: rotateY(0deg);
+}
+
+/* Transiciones en cada cara (no en el contenedor) */
+.card-front,
+.card-back{
+  transition: transform .6s cubic-bezier(.2,.65,.3,1);
+}
+
+/* Frente (aprovecha tus estilos) */
+.card-front .service-icon{
+  font-size: 3rem;
+  color: var(--secondary-color);
+  margin-bottom: .5rem;
+}
+.card-front .service-title{
+  font-size: 1.4rem;
+  color: var(--primary-color);
+}
+
+/* Dorso: títulos y lista claros */
+.card-back-title{
+  font-size: 1.05rem;
+  margin-bottom: .75rem;
+  color: var(--primary-color);
+}
+.card-list{
+  margin: 0;
+  padding-left: 1.1rem;
+  list-style: disc;
+  font-size: .98rem;
+  line-height: 1.55;
+}
+.card-list li + li{ margin-top: .35rem; }
+
+/* Scrollbar sutil (opcional) */
+.card-back::-webkit-scrollbar{ width: 8px; }
+.card-back::-webkit-scrollbar-thumb{ background: #ddd; border-radius: 8px; }
+
+/* Responsive: más compactas en móvil si quieres */
+@media (max-width: 768px){
+  :root{ --card-height: 300px; }
+}
+
+/* Salvaguarda por si algún ancestro tiene transform que rompa el 3D */
+.services-grid{ transform: translateZ(0); 
+}
+
+/* === Flip por caras (ya lo tienes): añadimos soporte por clase === */
+.service-card.flip.is-flipped .card-front{ transform: rotateY(180deg); }
+.service-card.flip.is-flipped .card-back { transform: rotateY(0deg); }
+
+/* Abogados */
+.team-section {
+    background-color: #f9f9f9;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.team-member {
+    background-color: #fff;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    text-align: center;
+}
+
+.member-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.member-info {
+    padding: 1.5rem;
+}
+
+.member-name {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.member-role {
+    color: var(--secondary-color);
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+/* Contacto */
+.contact-section {
+    background-color: var(--primary-color);
+    color: var(--light-color);
+}
+
+.contact-section h2 {
+    color:#fff;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.contact-info {
+    padding: 2rem;
+}
+
+.contact-info h3 {
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    font-size: 1.8rem;
+}
+
+.contact-info h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background-color: var(--secondary-color);
+}
+
+.contact-info p{ margin: 0; line-height: 1.6; }
+.link{ color: var(--light-color); text-decoration: underline; text-underline-offset: .15em; }
+.link:hover{ text-decoration: none; }
+.link.tel{ color: #ff6b6b; }     /* rojo legible sobre fondo oscuro */
+.link.wa{ color: #22c55e; }      /* verde WhatsApp */
+
+.info-item{
+  display: flex;                 
+  align-items: flex-start;      
+  gap: 12px;                     
+  margin-bottom: 1rem;
+}
+
+.info-icon{
+  width: 24px;                   /* columna fija para todos los iconos */
+  min-width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;                /* evita “bailes” verticales */
+  margin-top: 2px;               /* microajuste para emoji */
+  color: var(--secondary-color);
+  font-size: 1.2rem;
+}
+
+/* Normaliza el icono PNG de WhatsApp en la sección Contacto */
+.wa-icon{
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* Por seguridad: cualquier img dentro del contenedor de icono no podrá “salirse” */
+.info-icon img{
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  width: auto;
+}
+
+/* Maps */
+.map-responsive{
+    overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    height:0;
+}
+
+
+
+.map-responsive h3 {
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    font-size: 1.8rem;
+}
+
+.map-responsive iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    border: 3px solid var(--secondary-color) !important; /* Borde con el color secundario */
+    border-radius: 8px; /* Esquinas redondeadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+}
+
+/* Footer */
+.footer {
+    background-color: rgba(60, 60, 60, 0.95);
+    color: var(--light-color);
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.footer-logo {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 1.5rem 0;
+}
+
+.footer-nav li {
+    margin: 0 1rem;
+}
+
+.footer-nav a {
+    color: var(--light-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-nav a:hover {
+    color: var(--secondary-color);
+}
+
+.footer .logo {
+    display: block;
+    text-align: center;
+    margin: 0 auto 2rem auto;
+}
+
+.footer .nav-logo {
+    height: 60px;
+    width: auto;
+    transition: var(--transition);
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.social-icon {
+    margin: 0 0.5rem;
+    color: var(--light-color);
+    font-size: 1.2rem;
+    transition: var(--transition);
+}
+
+.social-icon:hover {
+    color: var(--secondary-color);
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--primary-color);
+        text-align: center;
+        transition: 0.4s;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        padding: 2rem 0;
+    }
+    
+    .nav-menu.active {
+        top: 70px;
+    }
+    
+    .nav-item {
+        margin: 1rem 0;
+    }
+    
+    .hamburger {
+        display: block;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero h2 {
+        font-size: 1.2rem;
+    }
+    
+    .section-title h2 {
+        font-size: 2rem;
+    }
+}
+
+/* Responsive para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .footer .nav-logo {
+        height: 45px;
+    }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .footer .nav-logo {
+        height: 35px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-logo {
+        height: 30px;
+    }
+}
+
+/* === FIX: Móvil: que .is-flipped gane SIEMPRE a :hover “pegado” (iOS) === */
+@media (hover: none), (pointer: coarse) {
+  /* Estado base en móvil: no rotamos el contenedor */
+  .service-card.flip .card-inner { transform: none !important; }
+
+  /* Arranque: trasera oculta (sin transform para permitir scroll) */
+  .service-card.flip .card-back {
+    transform: none !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* Giro por clase: ¡esta debe ganar SIEMPRE! */
+  .service-card.flip.is-flipped .card-front { 
+    transform: rotateY(180deg) !important; 
+    pointer-events: none;          /* que no tape la trasera */
+    z-index: 1;
+  }
+  .service-card.flip.is-flipped .card-back  { 
+    opacity: 1 !important; 
+    visibility: visible !important; 
+    pointer-events: auto !important; 
+    z-index: 2;
+  }
+
+  /* Desactiva el :hover de escritorio en móvil… */
+  .service-card.flip:hover .card-front { transform: none; }
+  .service-card.flip:hover .card-back  { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  /* …pero si además está is-flipped, prevalece is-flipped (evita conflicto) */
+  .service-card.flip.is-flipped:hover .card-front { 
+    transform: rotateY(180deg) !important; 
+  }
+  .service-card.flip.is-flipped:hover .card-back  { 
+    opacity: 1 !important; 
+    visibility: visible !important; 
+    pointer-events: auto !important; 
+  }
+
+  /* ==== SOLO Derecho Civil: scroll interno en la cara trasera ==== */
+  :root { --card-height: 320px; }  /* altura algo más compacta en móvil */
+
+  /* La cara trasera no tiene overflow (lo tendrá su hijo scrollable) */
+  .service-card.flip--civil .card-back {
+    display: block;
+    padding: 0;
+    overflow: visible !important;     /* anula overflow:auto de la regla global */
+  }
+
+  /* El scroll vive en un hijo SIN transform */
+  .service-card.flip--civil .card-back-content{
+    position: relative;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;                  /* <- scroll aquí */
+    -webkit-overflow-scrolling: touch; /* inercia iOS */
+    overscroll-behavior: contain;      /* no arrastra el body */
+    touch-action: pan-y;               /* pista a navegadores */
+    padding: 1rem .9rem calc(1rem + 72px) 1rem; /* margen por botón WA si solapa */
+    transform: translateZ(0);          /* su propia capa de composición */
+    will-change: scroll-position;
+  }
+
+  /* Scrollbar sutil (webkit) */
+  .service-card.flip--civil .card-back-content::-webkit-scrollbar{ width: 6px; }
+  .service-card.flip--civil .card-back-content::-webkit-scrollbar-thumb{
+    background: rgba(0,0,0,.22); border-radius: 6px;
+  }
+
+  /* Pista visual de que hay más contenido */
+  .service-card.flip--civil .card-back-content::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:0;
+    height: 24px; pointer-events:none;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.96));
+  }
+}
+
+/* ===== Indicadores de “hay más” SOLO para la tarjeta Civil ===== */
+
+/* Por defecto, ocultos */
+.service-card.flip--civil .card-back-content::before,
+.service-card.flip--civil .card-back-content::after{
+  content:"";
+  display:none;
+  position:absolute;
+  left:0; right:0;
+  pointer-events:none;
+  z-index: 3;
+}
+
+/* Gradiente al pie (pista visual de más contenido) */
+.service-card.flip--civil .card-back-content.has-overflow:not(.at-bottom)::after{
+  display:block;
+  bottom:0;
+  height:40px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.95));
+}
+
+/* Flecha + texto “Desliza para ver más” */
+.service-card.flip--civil .card-back-content.has-overflow:not(.at-bottom)::before{
+  display:block;
+  content:"⇣ Desliza para ver más";
+  right:12px;
+  bottom:8px;
+  width:auto;
+  text-align:right;
+  font-size:0.85rem;
+  color: var(--secondary-color);
+  animation: cue-bounce 1.5s infinite;
+}
+
+/* Animación suave */
+@keyframes cue-bounce{
+  0%,100%{ transform: translateY(0); opacity:.75; }
+  50%    { transform: translateY(4px); opacity:1;   }
+}
+
+/* Mostramos los indicadores SOLO cuando la cara trasera está visible (hover en desktop, is-flipped en móvil) */
+.service-card.flip:hover .card-back .card-back-content.has-overflow:not(.at-bottom)::before,
+.service-card.flip:hover .card-back .card-back-content.has-overflow:not(.at-bottom)::after,
+.service-card.flip.is-flipped .card-back .card-back-content.has-overflow:not(.at-bottom)::before,
+.service-card.flip.is-flipped .card-back .card-back-content.has-overflow:not(.at-bottom)::after{
+  display:block;
+}
+
+/* Móvil: mantenemos la altura de tarjeta y el padding inferior extra si hay botón WA flotante */
+@media (max-width: 768px){
+  :root{ --card-height: 320px; }
+  .service-card.flip--civil .card-back-content{
+    padding-bottom: calc(1rem + 72px); /* ajusta si tu botón WA es más grande/pequeño */
+  }
+}
+
+/* ===== [EXTRAS FINALES] Indicadores con fade-in, gradiente de marca y botón "Volver" ===== */
+
+/* Ocultos por defecto */
+.service-card.flip--civil .card-back-content::before,
+.service-card.flip--civil .card-back-content::after{
+  content:"";
+  display:none;
+  position:absolute;
+  left:0; right:0;
+  pointer-events:none;
+  z-index:3;
+  opacity:0; transform: translateY(4px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+/* Mostrar SOLO cuando hay overflow real y la tarjeta está visible (hover/flip) */
+.service-card.flip:hover .card-back .card-back-content.has-overflow:not(.at-bottom)::before,
+.service-card.flip:hover .card-back .card-back-content.has-overflow:not(.at-bottom)::after,
+.service-card.flip.is-flipped .card-back .card-back-content.has-overflow:not(.at-bottom)::before,
+.service-card.flip.is-flipped .card-back .card-back-content.has-overflow:not(.at-bottom)::after{
+  display:block; opacity:1; transform: translateY(0);
+}
+
+/* Flecha + texto */
+.service-card.flip--civil .card-back-content.has-overflow:not(.at-bottom)::before{
+  content:"⇣ Desliza para ver más";
+  right:12px; bottom:8px; width:auto; text-align:right;
+  font-size:0.85rem; color: var(--secondary-color);
+  animation: cue-bounce 1.5s infinite;
+}
+@keyframes cue-bounce{
+  0%,100%{ transform: translateY(0); opacity:.85; }
+  50%    { transform: translateY(4px); opacity:1;   }
+}
+
+/* Gradiente al pie con color de marca (fallback a blanco si no hay soporte) */
+.service-card.flip--civil .card-back-content.has-overflow:not(.at-bottom)::after{
+  bottom:0; height:40px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.95));
+}
+@supports (background: color-mix(in srgb, red 10%, white)){
+  .service-card.flip--civil .card-back-content.has-overflow:not(.at-bottom)::after{
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--secondary-color) 0%, transparent) 0%,
+        color-mix(in srgb, var(--secondary-color) 10%, white) 100%
+      );
+  }
+}
+
+/* Botón “Volver” (solo móvil por CSS; se inyecta por JS) */
+.flip-close{
+  position:absolute; top:8px; right:8px;
+  padding:.45rem .7rem; border-radius:999px; border:1px solid rgba(0,0,0,.15);
+  background:#fff; color: var(--dark-color); font-size:.85rem; line-height:1;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  cursor:pointer; z-index:4; display:none;
+}
+.flip-close:hover{ background:#f8f8f8; }
+.flip-close:focus-visible{ outline:2px solid var(--secondary-color); outline-offset:2px; }
+
+@media (max-width: 768px){
+  .service-card.flip.is-flipped .flip-close{ display:block; }
+}
