@@ -833,39 +833,40 @@ body {
 
 /* ===== Tarjeta Branding (logo del despacho) ===== */
 .brand-card{
-  /* mismo tamaño visual que las flip: quitamos padding */
   padding: 0;
   background: transparent;
 }
 
-/* El “interior” copia el look de las flip (altura, radio y sombra) */
 .brand-card .brand-inner{
   height: var(--card-height);
   border-radius: var(--card-radius);
   box-shadow: var(--shadow);
-  background: #fff;
+  background: var(--primary-color);  /* fondo oscuro: usa tu color principal */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 2rem;
 }
 
 /* Logo centrado y nítido */
 .brand-card .brand-logo{
-  width: 72px;                 /* puedes subirlo a 84–96 si quieres más presencia */
+  width: 84px;  /* un poco más grande para que destaque */
   height: auto;
-  margin-bottom: .6rem;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,.06));
-  opacity: .95;
+  margin-bottom: .8rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.4));
 }
 
-/* Título coherente con el resto */
+/* Título sobre fondo oscuro */
 .brand-card .service-title{
   margin: 0;
+  color: #fff;                  /* texto blanco */
+  font-weight: 600;
+  letter-spacing: .5px;
 }
 
 /* Visible solo en tablet/escritorio */
-.brand-card{ display: none; }             /* oculta en móvil */
+.brand-card{ display: none; }
 @media (min-width: 769px){
   .brand-card{ display: block; }
 }
