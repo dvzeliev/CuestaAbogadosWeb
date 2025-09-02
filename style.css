@@ -353,7 +353,7 @@ body {
 
 /* Responsive: más compactas en móvil si quieres */
 @media (max-width: 768px){
-  :root{ --card-height: 320px; }
+  :root{ --card-height: 300px; }
 }
 
 /* Salvaguarda por si algún ancestro tiene transform que rompa el 3D */
