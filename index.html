@@ -306,6 +306,57 @@
     </footer>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function(){
+        const isTouch = matchMedia('(hover: none), (pointer: coarse)').matches;
+        const cards = document.querySelectorAll('.service-card.flip');
+        if (!cards.length) return;
+
+        // Evita que el gesto de scroll dentro del dorso se interprete como tap
+        let moved = false;
+
+        // Delegado: cada tarjeta
+        cards.forEach(function(card){
+            // Taps para girar en móvil/tablet
+            card.addEventListener('click', function(e){
+            if (!isTouch) return;                 // escritorio usa :hover
+            if (e.target.closest('a')) return;    // no girar si clic en enlace
+            if (moved) { moved = false; return; } // estaba desplazando
+            card.classList.toggle('is-flipped');
+            });
+
+            // Accesible con teclado
+            card.addEventListener('keydown', function(e){
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                card.classList.toggle('is-flipped');
+            }
+            });
+
+            // Dentro del área scrollable: permitir desplazamiento
+            const scroller = card.querySelector('.card-back-content');
+            if (scroller){
+            // impedir que el tap de cierre/abrir se dispare desde el scroll
+            scroller.addEventListener('click', function(e){ e.stopPropagation(); });
+            scroller.addEventListener('touchstart', function(){ moved = false; }, {passive:true});
+            scroller.addEventListener('touchmove',  function(){ moved = true;  }, {passive:true});
+            scroller.addEventListener('touchend',   function(e){
+                if (moved) e.stopPropagation();
+            }, {passive:true});
+            }
+        });
+
+        // Cerrar si tocas fuera
+        document.addEventListener('click', function(e){
+            if (!isTouch) return;
+            cards.forEach(function(card){
+            if (!card.contains(e.target)) card.classList.remove('is-flipped');
+            });
+        });
+        });
+    </script>
+
+
+    <script>
         // JavaScript para la navegación responsive
         const hamburger = document.querySelector('.hamburger');
         const navMenu = document.querySelector('.nav-menu');
@@ -331,54 +382,6 @@
                 navbar.style.backgroundColor = 'var(--primary-color)';
                 navbar.style.padding = '1rem 0';
             }
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function(){
-        const isTouch = matchMedia('(hover: none), (pointer: coarse)').matches;
-
-        const cards = document.querySelectorAll('.service-card.flip');
-        if (!cards.length) return;
-
-        // Evitar que un scroll dentro del dorso dispare el "click" de la tarjeta
-        let touchedAndMoved = false;
-        const scrollers = document.querySelectorAll('.card-back-content');
-
-        scrollers.forEach(function(el){
-            el.addEventListener('click', function(e){ e.stopPropagation(); });
-            el.addEventListener('touchstart', function(){ touchedAndMoved = false; }, {passive:true});
-            el.addEventListener('touchmove',  function(){ touchedAndMoved = true;  }, {passive:true});
-            el.addEventListener('touchend',   function(e){
-            // si realmente fue scroll, no propagamos el "tap"
-            if (touchedAndMoved) e.stopPropagation();
-            }, {passive:true});
-        });
-
-        cards.forEach(function(card){
-            card.addEventListener('click', function(e){
-            if (!isTouch) return;                 // en desktop seguimos con :hover
-            if (touchedAndMoved) { touchedAndMoved = false; return; }  // estaba scrolleando
-            if (e.target.closest('a')) return;    // no girar si pulsa un enlace
-            card.classList.toggle('is-flipped');  // activar giro por toque
-            });
-
-            // Accesibilidad con teclado
-            card.addEventListener('keydown', function(e){
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                card.classList.toggle('is-flipped');
-            }
-            });
-        });
-
-        // Cerrar si toca fuera
-        document.addEventListener('click', function(e){
-            if (!isTouch) return;
-            cards.forEach(function(card){
-            if (!card.contains(e.target)) card.classList.remove('is-flipped');
-            });
-        });
         });
     </script>
 
