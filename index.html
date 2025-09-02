@@ -416,5 +416,106 @@
         });
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+        const isTouch = matchMedia('(hover: none), (pointer: coarse)').matches;
+        const cards = document.querySelectorAll('.service-card.flip');
+
+        // 1) Inyectar botón "Volver" en todas las tarjetas (sin tocar HTML)
+        cards.forEach((card, idx) => {
+            const back = card.querySelector('.card-back');
+            if (!back) return;
+
+            // Asegurar IDs y ARIA
+            const scroller = back.querySelector('.card-back-content') || back;
+            if (!scroller.id) scroller.id = 'card-back-content-' + (idx+1);
+            card.setAttribute('role', 'button');
+            card.setAttribute('aria-controls', scroller.id);
+            card.setAttribute('aria-expanded', 'false');
+
+            // Botón Volver (solo móvil por CSS)
+            if (!back.querySelector('.flip-close')){
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'flip-close';
+            btn.setAttribute('aria-label', 'Volver');
+            btn.textContent = 'Volver';
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                card.classList.remove('is-flipped');
+                card.setAttribute('aria-expanded','false');
+                card.focus({preventScroll:true});
+            });
+            back.appendChild(btn);
+            }
+        });
+
+        // 2) Gestión del giro
+        let moved = false;
+
+        cards.forEach((card) => {
+            // Click/tap en móvil: alterna el giro
+            card.addEventListener('click', function(e){
+            if (!isTouch) return;                 // desktop usa :hover
+            if (e.target.closest('a,button')) return; // respeta enlaces/botones
+            if (moved) { moved = false; return; } // estaba scrolleando
+            const flipped = card.classList.toggle('is-flipped');
+            card.setAttribute('aria-expanded', flipped ? 'true' : 'false');
+            // foco al contenido trasero si existe
+            const backContent = card.querySelector('.card-back-content') || card.querySelector('.card-back');
+            if (flipped && backContent) backContent.focus?.();
+            });
+
+            // Teclado accesible
+            card.addEventListener('keydown', function(e){
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const flipped = card.classList.toggle('is-flipped');
+                card.setAttribute('aria-expanded', flipped ? 'true' : 'false');
+            }
+            });
+
+            // Si toca fuera, cerrar en móvil
+            document.addEventListener('click', function(e){
+            if (!isTouch) return;
+            if (!card.contains(e.target)) {
+                card.classList.remove('is-flipped');
+                card.setAttribute('aria-expanded','false');
+            }
+            }, {passive:true});
+
+            // Evitar que el scroll dispare el tap de giro
+            const scroller = card.querySelector('.card-back-content');
+            if (scroller){
+            scroller.setAttribute('tabindex','-1'); // recibe foco sin tabulación global
+            scroller.addEventListener('click', (e)=>e.stopPropagation());
+            scroller.addEventListener('touchstart', ()=>{ moved = false; }, {passive:true});
+            scroller.addEventListener('touchmove',  ()=>{ moved = true;  }, {passive:true});
+            scroller.addEventListener('touchend',   (e)=>{ if (moved) e.stopPropagation(); }, {passive:true});
+            }
+        });
+
+        // 3) Mostrar/ocultar indicadores solo si hay overflow (Civil + extensible)
+        function markOverflow(el){
+            const has = el.scrollHeight > el.clientHeight + 1;
+            el.classList.toggle('has-overflow', has);
+            markBottom(el);
+        }
+        function markBottom(el){
+            const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
+            el.classList.toggle('at-bottom', atBottom);
+        }
+
+        const civilContent = document.querySelector('.service-card.flip--civil .card-back-content');
+        if (civilContent){
+            markOverflow(civilContent);
+            civilContent.addEventListener('scroll', ()=>markBottom(civilContent), {passive:true});
+            window.addEventListener('resize', ()=>markOverflow(civilContent));
+            window.addEventListener('orientationchange', ()=>markOverflow(civilContent));
+            setTimeout(()=>markOverflow(civilContent), 250); // por si cambian fuentes/imágenes
+        }
+        });
+    </script>
+
 </body>
 </html>
