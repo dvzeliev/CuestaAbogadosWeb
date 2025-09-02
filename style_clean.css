@@ -811,23 +811,22 @@ body {
 }
 
 @media (max-width: 768px){
-  /* Pseudo-elemento en la CARA DELANTERA */
-  .service-card.flip .card-front::after{
+  /* Pseudo-elemento en la CARA DELANTERA: SOLO en Derecho Civil */
+  .service-card.flip--civil .card-front::after{
     content: "";
     position: absolute;
-    right: 12px;                  /* separaciones desde el borde de la card */
+    right: 12px;
     bottom: 12px;
-    width: 46px;                  /* ajusta tamaño si lo quieres más grande */
+    width: 46px;
     height: 46px;
     background: url("./touch.png") center / contain no-repeat;
     animation: tap-bounce 1.4s ease-in-out infinite;
-    pointer-events: none;         /* no bloquea el tap */
+    pointer-events: none;
     z-index: 3;
     filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
   }
 
-  /* Ocultar el hint cuando la tarjeta esté volteada… */
-  .service-card.flip.is-flipped .card-front::after{ display: none; }
-  /* …o cuando ya lo hayamos “descartado” por primer toque */
-  .service-card.flip.hint-hidden .card-front::after{ display: none; }
+  /* Ocultar el hint cuando la tarjeta Civil esté volteada o descartada */
+  .service-card.flip--civil.is-flipped .card-front::after{ display: none; }
+  .service-card.flip--civil.hint-hidden .card-front::after{ display: none; }
 }
