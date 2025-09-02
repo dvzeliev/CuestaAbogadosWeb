@@ -841,7 +841,7 @@ body {
   height: var(--card-height);
   border-radius: var(--card-radius);
   box-shadow: var(--shadow);
-  background: var(--primary-color);  /* fondo oscuro: usa tu color principal */
+  background: var(--secondary-color);  /* fondo oscuro: usa tu color principal */
   display: flex;
   flex-direction: column;
   align-items: center;
