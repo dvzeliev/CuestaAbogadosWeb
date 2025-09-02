@@ -852,7 +852,7 @@ body {
 /* Logo centrado y nítido */
 .brand-card .brand-logo{
   width: 140px;       /* antes 84px → ahora mucho mayor */
-  max-width: 80%;     /* no supera el 60% del ancho de la tarjeta */
+  max-width: 100%;     /* no supera el 60% del ancho de la tarjeta */
   height: auto;
   margin-bottom: 1rem;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,.4));
