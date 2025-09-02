@@ -298,11 +298,17 @@ body {
   transform: rotateY(0deg) translateZ(0.01px);
   z-index: 2;
 }
-.card-back{  
-  transform: rotateY(-180deg) translateZ(0.01px); /* -180 evita espejos */
+
+.card-back {
+  transform: rotateY(-180deg) translateZ(0.01px);
   text-align: left;
   color: var(--dark-color);
-  overflow: hidden;                         /* por si hay mucha lista */
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* centrado horizontal */
+  justify-content: center;  /* centrado vertical */
+  padding: 1.25rem;         /* mantiene márgenes internos */
+  overflow: hidden;
 }
 
 /* Giro en hover y con teclado (focus) */
