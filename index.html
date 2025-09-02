@@ -11,51 +11,6 @@
     <link rel="shortcut icon" href="Favicon_sinfondo64x64.png"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
-
-<script>
-    (function(){
-    // Aplica solo en móvil/tablet
-    var isTouch = matchMedia('(hover: none), (pointer: coarse)').matches;
-
-    var cards = document.querySelectorAll('.service-card.flip');
-    if (!cards.length) return;
-
-    cards.forEach(function(card){
-        // toggle con click/tap
-        card.addEventListener('click', function(e){
-        // si pulsas en un enlace interno, no giramos
-        if (e.target.closest('a')) return;
-        // si estás arrastrando el scroll interno, no hagas toggle
-        if (e.target.closest('.card-back-content')) return;
-        card.classList.toggle('is-flipped');
-        });
-
-        // soporte teclado (enter/espacio)
-        card.addEventListener('keydown', function(e){
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            card.classList.toggle('is-flipped');
-        }
-        });
-    });
-
-    // Cerrar al tocar fuera
-    document.addEventListener('click', function(e){
-        cards.forEach(function(card){
-        if (!card.contains(e.target)) card.classList.remove('is-flipped');
-        });
-    });
-
-    // Evita que el scroll interno dispare el click de la tarjeta
-    var scrollers = document.querySelectorAll('.card-back-content');
-    scrollers.forEach(function(el){
-        el.addEventListener('click', function(e){ e.stopPropagation(); });
-        el.addEventListener('touchstart', function(e){ e.stopPropagation(); }, {passive:true});
-    });
-    })();
-</script>
-
-
 <body>
     <a href="https://wa.me/34619180219?text=Hola%2C%20tengo%20una%20consulta" class="float" target="_blank" rel="noopener" aria-label="Abrir chat de WhatsApp">
     <i class="fa fa-whatsapp my-float" aria-hidden="true"></i>
@@ -378,5 +333,54 @@
             }
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+        const isTouch = matchMedia('(hover: none), (pointer: coarse)').matches;
+
+        const cards = document.querySelectorAll('.service-card.flip');
+        if (!cards.length) return;
+
+        // Evitar que un scroll dentro del dorso dispare el "click" de la tarjeta
+        let touchedAndMoved = false;
+        const scrollers = document.querySelectorAll('.card-back-content');
+
+        scrollers.forEach(function(el){
+            el.addEventListener('click', function(e){ e.stopPropagation(); });
+            el.addEventListener('touchstart', function(){ touchedAndMoved = false; }, {passive:true});
+            el.addEventListener('touchmove',  function(){ touchedAndMoved = true;  }, {passive:true});
+            el.addEventListener('touchend',   function(e){
+            // si realmente fue scroll, no propagamos el "tap"
+            if (touchedAndMoved) e.stopPropagation();
+            }, {passive:true});
+        });
+
+        cards.forEach(function(card){
+            card.addEventListener('click', function(e){
+            if (!isTouch) return;                 // en desktop seguimos con :hover
+            if (touchedAndMoved) { touchedAndMoved = false; return; }  // estaba scrolleando
+            if (e.target.closest('a')) return;    // no girar si pulsa un enlace
+            card.classList.toggle('is-flipped');  // activar giro por toque
+            });
+
+            // Accesibilidad con teclado
+            card.addEventListener('keydown', function(e){
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                card.classList.toggle('is-flipped');
+            }
+            });
+        });
+
+        // Cerrar si toca fuera
+        document.addEventListener('click', function(e){
+            if (!isTouch) return;
+            cards.forEach(function(card){
+            if (!card.contains(e.target)) card.classList.remove('is-flipped');
+            });
+        });
+        });
+    </script>
+
 </body>
 </html>

@@ -364,39 +364,45 @@ body {
 .service-card.flip.is-flipped .card-front{ transform: rotateY(180deg); }
 .service-card.flip.is-flipped .card-back { transform: rotateY(0deg); }
 
-/* --- Ajustes específicos móvil para que el scroll funcione --- */
+/* ==== Civil: scroll interno en móvil, manteniendo el giro ==== */
 @media (max-width: 768px){
-  :root{ --card-height: 300px; } /* algo más compacta en móvil */
+  /* Altura algo más contenida en móvil */
+  :root{ --card-height: 320px; }
 
-  /* La cara trasera sigue girando, pero el scroll lo hace un hijo sin transform */
+  /* La cara trasera de CIVIL no debe tener overflow si está transformada */
   .service-card.flip--civil .card-back{
-    align-items: stretch;         /* que estire a toda la altura */
+    display: block;              /* fuera del flex centrado */
+    padding: 0;                  /* el padding va en el hijo */
+    overflow: visible !important;/* important para anular el overflow:auto global */
+    align-items: stretch;        /* por si hereda flex */
     justify-content: flex-start;
-    padding: 0;                   /* padding dentro del contenedor */
   }
 
+  /* El scroll vive en un hijo SIN transformaciones */
   .service-card.flip--civil .card-back-content{
+    position: relative;
     height: 100%;
     max-height: 100%;
-    overflow-y: auto;             /* AQUÍ va el scroll */
-    -webkit-overflow-scrolling: touch; /* inercia iOS */
-    overscroll-behavior: contain;      /* no arrastra el body */
-    touch-action: pan-y;               /* pista a navegadores */
+    overflow-y: auto;                 /* aquí va el scroll */
+    -webkit-overflow-scrolling: touch;/* inercia iOS */
+    overscroll-behavior: contain;     /* no arrastra el body */
+    touch-action: pan-y;              /* pista a navegadores */
     padding: 1rem .9rem 1.2rem 1rem;
-    position: relative;
+    transform: translateZ(0);         /* propia capa de composición */
+    will-change: scroll-position;
   }
 
-  /* Scrollbar sutil (webkit) */
+  /* Scrollbar sutil */
   .service-card.flip--civil .card-back-content::-webkit-scrollbar{ width: 6px; }
   .service-card.flip--civil .card-back-content::-webkit-scrollbar-thumb{
     background: rgba(0,0,0,.22); border-radius: 6px;
   }
 
-  /* Degradado al pie como pista de que hay más contenido */
+  /* Degradado-pista de que hay más contenido */
   .service-card.flip--civil .card-back-content::after{
     content:"";
     position:absolute; left:0; right:0; bottom:0;
-    height: 26px; pointer-events:none;
+    height: 24px; pointer-events:none;
     background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.96));
   }
 }
