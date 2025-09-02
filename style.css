@@ -366,7 +366,7 @@ body {
 
 /* --- Ajustes específicos móvil para que el scroll funcione --- */
 @media (max-width: 768px){
-  :root{ --card-height: 320px; } /* algo más compacta en móvil */
+  :root{ --card-height: 300px; } /* algo más compacta en móvil */
 
   /* La cara trasera sigue girando, pero el scroll lo hace un hijo sin transform */
   .service-card.flip--civil .card-back{
