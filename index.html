@@ -357,7 +357,9 @@
             btn.type = 'button';
             btn.className = 'flip-close';
             btn.setAttribute('aria-label', 'Volver');
-            btn.textContent = 'Volver';
+            btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+              + '<path d="M12.5 5a7.5 7.5 0 1 1-7.06 9.96 1 1 0 1 1 1.9-.62A5.5 5.5 0 1 0 12.5 7H8.41l1.3 1.3a1 1 0 0 1-1.42 1.4l-3-3a1 1 0 0 1 0-1.4l3-3a1 1 0 1 1 1.42 1.4L8.41 5H12.5z"/></svg>';
+
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 card.classList.remove('is-flipped');

@@ -784,3 +784,37 @@ body {
 @media (max-width: 768px){
   .service-card.flip.is-flipped .flip-close{ display:block; }
 }
+
+/* Botón "Volver" minimalista, flotante en la esquina inferior derecha */
+.flip-close{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+  width:44px;
+  height:44px;
+  padding:0;
+  border-radius:9999px;
+  border:1px solid rgba(0,0,0,.12);
+  background: rgba(255,255,255,.92);
+  color: var(--dark-color);
+  display:none;                 /* lo mostramos solo cuando está volteada y en móvil */
+  align-items:center;
+  justify-content:center;
+  box-shadow: 0 6px 18px rgba(0,0,0,.12);
+  backdrop-filter: blur(4px);   /* sutil, opcional */
+  cursor:pointer;
+  z-index:4;
+}
+.flip-close:hover{ background:#ffffff; }
+.flip-close:focus-visible{ outline:2px solid var(--secondary-color); outline-offset:2px; }
+.flip-close svg{ width:18px; height:18px; display:block; }
+
+/* Solo móvil: mostrar el botón cuando la tarjeta esté volteada */
+@media (max-width: 768px){
+  .service-card.flip.is-flipped .flip-close{ display:flex; }
+  /* deja hueco en la trasera para que no tape contenido */
+  .service-card.flip--civil .card-back-content{
+    padding-bottom: calc(1rem + 72px);
+  }
+}
+
