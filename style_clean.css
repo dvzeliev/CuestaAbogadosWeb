@@ -745,7 +745,7 @@ body {
 /* Flecha + texto */
 .service-card.flip--civil .card-back-content.has-overflow:not(.at-bottom)::before{
   content:"⇣ Desliza para ver más";
-  right:12px; bottom:8px; width:auto; text-align:right;
+  right:12px; bottom:8px; width:auto; text-align:center;
   font-size:0.85rem; color: var(--secondary-color);
   animation: cue-bounce 1.5s infinite;
 }
