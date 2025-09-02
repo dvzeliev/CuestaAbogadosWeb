@@ -804,3 +804,30 @@ body {
   }
 }
 
+/* ===== Hint táctil en tarjetas (solo móvil, cara delantera) ===== */
+@keyframes tap-bounce {
+  0%,100% { transform: scale(1) translateY(0); opacity: .85; }
+  40%     { transform: scale(.92) translateY(2px); opacity: 1; }
+}
+
+@media (max-width: 768px){
+  /* Pseudo-elemento en la CARA DELANTERA */
+  .service-card.flip .card-front::after{
+    content: "";
+    position: absolute;
+    right: 12px;                  /* separaciones desde el borde de la card */
+    bottom: 12px;
+    width: 46px;                  /* ajusta tamaño si lo quieres más grande */
+    height: 46px;
+    background: url("img/tap-hand.png") center / contain no-repeat;
+    animation: tap-bounce 1.4s ease-in-out infinite;
+    pointer-events: none;         /* no bloquea el tap */
+    z-index: 3;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
+  }
+
+  /* Ocultar el hint cuando la tarjeta esté volteada… */
+  .service-card.flip.is-flipped .card-front::after{ display: none; }
+  /* …o cuando ya lo hayamos “descartado” por primer toque */
+  .service-card.flip.hint-hidden .card-front::after{ display: none; }
+}
