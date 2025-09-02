@@ -355,6 +355,37 @@
         });
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+        // Solo la tarjeta Civil
+        const civilContent = document.querySelector('.service-card.flip--civil .card-back-content');
+        if(!civilContent) return;
+
+        function updateHasOverflow(){
+            // ¿Hay más contenido que alto visible?
+            const has = civilContent.scrollHeight > civilContent.clientHeight + 1;
+            civilContent.classList.toggle('has-overflow', has);
+            updateAtBottom();
+        }
+
+        function updateAtBottom(){
+            // ¿Estamos al final? (oculta las pistas)
+            const atBottom = civilContent.scrollTop + civilContent.clientHeight >= civilContent.scrollHeight - 2;
+            civilContent.classList.toggle('at-bottom', atBottom);
+        }
+
+        // Actualiza al cargar, al girar pantalla y al cambiar tamaño
+        updateHasOverflow();
+        window.addEventListener('resize', updateHasOverflow);
+        window.addEventListener('orientationchange', updateHasOverflow);
+
+        // Actualiza mientras se hace scroll dentro de la tarjeta
+        civilContent.addEventListener('scroll', updateAtBottom, {passive:true});
+
+        // Por si el contenido cambia dinámicamente (fuentes, webfonts, etc.)
+        setTimeout(updateHasOverflow, 250);
+        });
+    </script>
 
     <script>
         // JavaScript para la navegación responsive
