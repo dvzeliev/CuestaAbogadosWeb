@@ -364,78 +364,6 @@ body {
 .service-card.flip.is-flipped .card-front{ transform: rotateY(180deg); }
 .service-card.flip.is-flipped .card-back { transform: rotateY(0deg); }
 
-/* =======================
-   FLIP EN MÓVIL (iOS/Android)
-   - El frente rota 180°
-   - La trasera NO se transforma (aparece por opacidad)
-   - Solo la tarjeta CIVIL lleva scroll interno
-   ======================= */
-
-@media (hover: none), (pointer: coarse) {
-
-  /* No rotamos el contenedor en móvil */
-  .service-card.flip .card-inner{ transform: none !important; }
-
-  /* Estados base */
-  .service-card.flip .card-front,
-  .service-card.flip .card-back{
-    transition: transform .5s ease, opacity .3s ease, visibility .3s ease;
-  }
-
-  /* La trasera arranca oculta (sin transform para permitir scroll) */
-  .service-card.flip .card-back{
-    transform: none !important;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  /* Al “girar” (clase .is-flipped), el frente rota y la trasera aparece */
-  .service-card.flip.is-flipped .card-front{ transform: rotateY(180deg); }
-  .service-card.flip.is-flipped .card-back{
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-  }
-
-  /* Desactiva el hover de escritorio en móvil */
-  .service-card.flip:hover .card-front{ transform: none; }
-  .service-card.flip:hover .card-back{ opacity: 0; visibility: hidden; pointer-events: none; }
-
-  /* ========== Solo Derecho Civil: scroll interno en la cara trasera ========== */
-  :root{ --card-height: 320px; } /* altura algo más compacta en móvil */
-
-  .service-card.flip--civil .card-back{
-    display: block;    /* sin flex para que el hijo ocupe todo */
-    padding: 0;        /* padding lo lleva el contenedor scroll */
-  }
-
-  .service-card.flip--civil .card-back-content{
-    position: relative;
-    height: 100%;
-    max-height: 100%;
-    overflow-y: auto;                       /* AQUÍ vive el scroll */
-    -webkit-overflow-scrolling: touch;      /* inercia iOS */
-    overscroll-behavior: contain;           /* no arrastra el body */
-    touch-action: pan-y;                    /* pista a navegadores */
-    padding: 1rem .9rem calc(1rem + 72px) 1rem; /* extra abajo por el botón WA */
-  }
-
-  /* Scrollbar sutil */
-  .service-card.flip--civil .card-back-content::-webkit-scrollbar{ width: 6px; }
-  .service-card.flip--civil .card-back-content::-webkit-scrollbar-thumb{
-    background: rgba(0,0,0,.22); border-radius: 6px;
-  }
-
-  /* Pista de que hay más contenido */
-  .service-card.flip--civil .card-back-content::after{
-    content:"";
-    position:absolute; left:0; right:0; bottom:0;
-    height: 24px; pointer-events:none;
-    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.96));
-  }
-}
-
 /* Abogados */
 .team-section {
     background-color: #f9f9f9;
@@ -716,4 +644,83 @@ body {
     .nav-logo {
         height: 30px;
     }
+}
+
+/* === FIX: Móvil: que .is-flipped gane SIEMPRE a :hover “pegado” (iOS) === */
+@media (hover: none), (pointer: coarse) {
+  /* Estado base en móvil: no rotamos el contenedor */
+  .service-card.flip .card-inner { transform: none !important; }
+
+  /* Arranque: trasera oculta (sin transform para permitir scroll) */
+  .service-card.flip .card-back {
+    transform: none !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* Giro por clase: ¡esta debe ganar SIEMPRE! */
+  .service-card.flip.is-flipped .card-front { 
+    transform: rotateY(180deg) !important; 
+    pointer-events: none;          /* que no tape la trasera */
+    z-index: 1;
+  }
+  .service-card.flip.is-flipped .card-back  { 
+    opacity: 1 !important; 
+    visibility: visible !important; 
+    pointer-events: auto !important; 
+    z-index: 2;
+  }
+
+  /* Desactiva el :hover de escritorio en móvil… */
+  .service-card.flip:hover .card-front { transform: none; }
+  .service-card.flip:hover .card-back  { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  /* …pero si además está is-flipped, prevalece is-flipped (evita conflicto) */
+  .service-card.flip.is-flipped:hover .card-front { 
+    transform: rotateY(180deg) !important; 
+  }
+  .service-card.flip.is-flipped:hover .card-back  { 
+    opacity: 1 !important; 
+    visibility: visible !important; 
+    pointer-events: auto !important; 
+  }
+
+  /* ==== SOLO Derecho Civil: scroll interno en la cara trasera ==== */
+  :root { --card-height: 320px; }  /* altura algo más compacta en móvil */
+
+  /* La cara trasera no tiene overflow (lo tendrá su hijo scrollable) */
+  .service-card.flip--civil .card-back {
+    display: block;
+    padding: 0;
+    overflow: visible !important;     /* anula overflow:auto de la regla global */
+  }
+
+  /* El scroll vive en un hijo SIN transform */
+  .service-card.flip--civil .card-back-content{
+    position: relative;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;                  /* <- scroll aquí */
+    -webkit-overflow-scrolling: touch; /* inercia iOS */
+    overscroll-behavior: contain;      /* no arrastra el body */
+    touch-action: pan-y;               /* pista a navegadores */
+    padding: 1rem .9rem calc(1rem + 72px) 1rem; /* margen por botón WA si solapa */
+    transform: translateZ(0);          /* su propia capa de composición */
+    will-change: scroll-position;
+  }
+
+  /* Scrollbar sutil (webkit) */
+  .service-card.flip--civil .card-back-content::-webkit-scrollbar{ width: 6px; }
+  .service-card.flip--civil .card-back-content::-webkit-scrollbar-thumb{
+    background: rgba(0,0,0,.22); border-radius: 6px;
+  }
+
+  /* Pista visual de que hay más contenido */
+  .service-card.flip--civil .card-back-content::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:0;
+    height: 24px; pointer-events:none;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.96));
+  }
 }
