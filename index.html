@@ -359,9 +359,10 @@
             btn.type = 'button';
             btn.className = 'flip-close';
             btn.setAttribute('aria-label', 'Volver');
-            // Si prefieres Font Awesome, esta línea ya la tienes OK:
-            btn.innerHTML = '<i class="fa fa-arrow-left" aria-hidden="true"></i>';
-            // Si prefieres SVG, sustituye la línea anterior por la de SVG que te pasé.
+            // Icono flecha (SVG, accesible)
+            btn.innerHTML =
+                '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+                '<path d="M12.5 5a7.5 7.5 0 1 1-7.06 9.96 1 1 0 1 1 1.9-.62A5.5 5.5 0 1 0 12.5 7H8.41l1.3 1.3a1 1 0 0 1-1.42 1.4l-3-3a1 1 0 0 1 0-1.4l3-3a1 1 0 1 1 1.42 1.4L8.41 5H12.5z"/></svg>';
 
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -373,7 +374,7 @@
             back.appendChild(btn);
             }
 
-            // Hint táctil (si lo usas en CSS)
+            // Mostrar hint táctil de inicio en móvil
             if (isTouch) card.classList.add('show-hint');
         });
 
@@ -387,7 +388,7 @@
             if (e.target.closest('a,button')) return; // No girar si pulsas un enlace/botón
             if (moved) { moved = false; return; }     // Si estaba scrolleando, no togglear
 
-            // Oculta el hint desde el primer tap (si lo usas)
+            // Oculta el hint desde el primer tap
             card.classList.add('hint-hidden');
 
             const flipped = card.classList.toggle('is-flipped');
