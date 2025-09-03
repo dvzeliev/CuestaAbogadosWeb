@@ -525,7 +525,7 @@ body {
 }
 
 .footer-logo img {
-    width: 300px;   /* prueba con 300px */
+    width: 500px;   /* prueba con 300px */
     max-width: 100%; /* para que no se deforme en pantallas pequeñas */
     height: auto;    /* mantiene la proporción */
     display: inline-block;
