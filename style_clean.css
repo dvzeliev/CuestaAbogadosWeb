@@ -524,9 +524,9 @@ body {
     text-align: center;
 }
 
-.footer-logo {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+.footer-logo img {
+    width: 180px;
+    height: auto;
     display: inline-block;
 }
 
