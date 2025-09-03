@@ -524,10 +524,9 @@ body {
     text-align: center;
 }
 
-.footer-logo img {
-    width: 500px;   /* prueba con 300px */
-    max-width: 100%; /* para que no se deforme en pantallas pequeñas */
-    height: auto;    /* mantiene la proporción */
+.footer-logo {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
     display: inline-block;
 }
 
@@ -559,7 +558,7 @@ body {
 }
 
 .footer .nav-logo {
-    height: 200px;
+    height: 180px;
     width: auto;
     transition: var(--transition);
 }
