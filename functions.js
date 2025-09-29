@@ -144,4 +144,19 @@
       setTimeout(() => markOverflow(civilContent), 250);
     }
   });
+
+  // --- AVISO SUPERIOR: idiomas + cierre ---
+    document.addEventListener('DOMContentLoaded', () => {
+      const bar = document.querySelector('.notice-bar');
+      const closeBtn = bar?.querySelector('.notice-close');
+
+      if (bar && closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          bar.remove();
+          document.body.classList.remove('has-notice');
+        });
+      }
+  });
+
 })();
