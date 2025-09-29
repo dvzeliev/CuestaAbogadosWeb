@@ -159,4 +159,21 @@
       }
   });
 
+    // --- CTA Hero: scroll a #contacto compensando navbar/aviso ---
+  document.addEventListener('DOMContentLoaded', () => {
+    const cta = document.querySelector('.js-scroll-to-contact');
+    const target = document.querySelector('#contacto');
+    if (!cta || !target) return;
+
+    cta.addEventListener('click', (e) => {
+      e.preventDefault();
+      const navbar = document.querySelector('.navbar');
+      const notice = document.querySelector('.notice-bar');
+      const offset = (navbar?.offsetHeight || 0) + (notice ? notice.offsetHeight : 0) + 12; // 12px colchón
+      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+
 })();
