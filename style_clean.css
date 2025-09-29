@@ -893,6 +893,15 @@ body {
   box-shadow: 0 4px 14px rgba(0,0,0,.18);
 }
 
+.notice-bar .flag {
+  width: 20px;
+  height: 14px;
+  vertical-align: middle;
+  margin: 0 4px 2px 2px;
+  border-radius: 2px;
+  box-shadow: 0 0 2px rgba(0,0,0,.3);
+}
+
 .notice-bar .flag{ display: inline-block; transform: translateY(1px); }
 .notice-bar .notice-text{ display: inline-block; }
 
